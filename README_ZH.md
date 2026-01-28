@@ -66,6 +66,16 @@
 └─────────────────────────┘
 
 ````
+操作记忆治理
+<img width="1754" height="743" alt="image" src="https://github.com/user-attachments/assets/e5d7e11e-805c-4e23-986d-d3d1ce4c254b" />
+编辑与删除，虽然也可以新增， 不过一般都是AI新增
+<img width="1766" height="1142" alt="image" src="https://github.com/user-attachments/assets/323dc550-f492-4357-b87a-ca2447f414a7" />
+
+执行后报告
+记忆驱动以及纯视觉驱动（SoM辅助）
+<img width="2525" height="8413" alt="image" src="https://github.com/user-attachments/assets/394700b6-d84b-427e-9f02-c2802f59c81b" />
+
+
 
 
 
