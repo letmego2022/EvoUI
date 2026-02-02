@@ -70,6 +70,8 @@
 <img width="1578" height="692" alt="image" src="https://github.com/user-attachments/assets/8e6216d0-91f9-4898-a506-2ded8744fa68" />
 
 编辑与删除，虽然也可以新增， 不过一般都是AI新增
+<img width="1559" height="1202" alt="image" src="https://github.com/user-attachments/assets/c74552a4-a7bf-4897-b07b-8de87051f1d0" />
+
 <img width="1766" height="1142" alt="image" src="https://github.com/user-attachments/assets/323dc550-f492-4357-b87a-ca2447f414a7" />
 
 执行后报告
