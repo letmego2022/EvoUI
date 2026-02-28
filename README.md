@@ -105,54 +105,17 @@ to help testing teams deliver faster, more stable, and more maintainable automat
 
 ---
 
-## Product Walkthrough (中英双语)
+## Product Walkthrough (Bilingual + Left/Right Timeline)
 
-> Below is a compact, operation-style walkthrough. Each screen includes Chinese + English captions and uses a smaller display width for easier reading.
+> Updated to a timeline-style layout with **left image / stage node / right image**, so the flow reads like a step-by-step journey.
 
-### 1. 登录页 / Login Page
-**中文**：终端（CMD）风格登录界面，贴近测试与研发人员的工作心智。  
-**EN**: Terminal-style login experience designed for QA and engineering users.
+| Left View | Timeline Node | Right View |
+|---|---|---|
+| <img width="360" alt="EvoUI login page" src="https://github.com/user-attachments/assets/92ac4f5c-99d4-4018-b9fc-75ffc7f4d5ab" /> | **Phase 01: Access the Platform**<br/>中文：登录并进入统一仪表盘，建立测试上下文。<br/>EN: Sign in and enter the unified dashboard to establish project context. | <img width="360" alt="EvoUI dashboard" src="https://github.com/user-attachments/assets/3bae5bb1-8232-4137-bb86-51d1da53826e" /> |
+| <img width="360" alt="EvoUI user story management" src="https://github.com/user-attachments/assets/510f0860-ca1e-47ac-824a-9ef250817522" /> | **Phase 02: Structure Requirements**<br/>中文：维护 Story 结构，沉淀为可执行测试资产。<br/>EN: Curate and structure stories into executable testing assets. | <img width="360" alt="EvoUI test case generation" src="https://github.com/user-attachments/assets/7f7d9c8f-715f-45aa-9901-97cb1447b204" /> |
+| <img width="360" alt="EvoUI API automation" src="https://github.com/user-attachments/assets/3fe2c388-cd0a-4d98-9b66-2b026486f0c5" /> | **Phase 03: Generate & Execute**<br/>中文：自动生成脚本，并进入 Agent 协同执行。<br/>EN: Generate scripts automatically and move into agent-assisted execution. | <img width="360" alt="EvoUI AI agent workspace" src="https://github.com/user-attachments/assets/45217d70-4e61-4b77-ac77-b98277f733fd" /> |
+| <img width="360" alt="EvoUI agent orchestration" src="https://github.com/user-attachments/assets/f9dc035e-d667-4a37-9dbb-bd2ea04c9e9e" /> | **Phase 04: Orchestrate & Optimize Loop**<br/>中文：流程编排、UI 执行、报告回流，形成记忆优化闭环。<br/>EN: Orchestrate workflows, run UI automation, and feed reports into memory optimization. | <img width="360" alt="EvoUI UI automation robot" src="https://github.com/user-attachments/assets/c91e6534-fa42-47ba-9cd8-ac250fd85c3e" /> |
 
-<img width="560" alt="EvoUI login page" src="https://github.com/user-attachments/assets/92ac4f5c-99d4-4018-b9fc-75ffc7f4d5ab" />
+### End-to-End Timeline Summary
 
-### 2. 仪表盘 / Dashboard
-**中文**：统一入口管理测试域（Domain）与项目，并提供 AI Agent 的核心入口。  
-**EN**: Unified dashboard for test-domain/project management and quick access to AI Agents.
-
-<img width="560" alt="EvoUI dashboard" src="https://github.com/user-attachments/assets/3bae5bb1-8232-4137-bb86-51d1da53826e" />
-
-### 3. User Story 管理 / User Story Management
-**中文**：支持手动维护多类 User Story（PAGE / FUNCTION / FLOW / API 等）。  
-**EN**: Manually manage multiple User Story types (PAGE / FUNCTION / FLOW / API, etc.).
-
-<img width="560" alt="EvoUI user story management" src="https://github.com/user-attachments/assets/510f0860-ca1e-47ac-824a-9ef250817522" />
-
-### 4. 用例生成 / Test Case Generation
-**中文**：基于 UI 页面元素，由 AI BA 提取结构化信息并生成测试用例；其他场景可直接由 AI 生成。  
-**EN**: Generate test cases from structured UI analysis (AI BA extraction), with direct AI generation for other scenarios.
-
-<img width="560" alt="EvoUI test case generation" src="https://github.com/user-attachments/assets/7f7d9c8f-715f-45aa-9901-97cb1447b204" />
-
-### 5. 接口自动化 / API Automation
-**中文**：AI 可读取 API 类 User Story 自动生成脚本，支持对话式修改与主动优化，并保留偏好记忆。  
-**EN**: AI generates API test scripts from API-tagged stories, supports conversational edits and proactive optimization with preference memory.
-
-<img width="560" alt="EvoUI API automation" src="https://github.com/user-attachments/assets/3fe2c388-cd0a-4d98-9b66-2b026486f0c5" />
-
-### 6. AI Agent 工作台 / AI Agent Workspace
-**中文**：集中管理 Agent 能力、执行入口与协同上下文。  
-**EN**: Central workspace for Agent capabilities, execution entry points, and shared context.
-
-<img width="560" alt="EvoUI AI agent workspace" src="https://github.com/user-attachments/assets/45217d70-4e61-4b77-ac77-b98277f733fd" />
-
-### 7. Agent 流程编排 / Agent Workflow Orchestration
-**中文**：可视化编排复杂任务流程，支持多阶段执行与分支控制。  
-**EN**: Visually orchestrate complex, multi-stage workflows with branch control.
-
-<img width="560" alt="EvoUI agent orchestration" src="https://github.com/user-attachments/assets/f9dc035e-d667-4a37-9dbb-bd2ea04c9e9e" />
-
-### 8. UI 自动化机器人 / UI Automation Robot
-**中文**：执行 UI 自动化任务，输出报告，并结合记忆机制持续优化执行稳定性。  
-**EN**: Execute UI automation with reporting and memory-driven stability improvements.
-
-<img width="560" alt="EvoUI UI automation robot" src="https://github.com/user-attachments/assets/c91e6534-fa42-47ba-9cd8-ac250fd85c3e" />
+`Login/Dashboard → Story Curation → Case/API Generation → Agent Orchestration & Execution → UI Validation Reports → Memory Feedback Optimization`
