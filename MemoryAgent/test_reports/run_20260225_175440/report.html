@@ -1,0 +1,613 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>AI Agent Execution Report</title>
+            <style>
+                body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+                .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+                h1 { color: #1a73e8; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+                .meta { color: #666; font-size: 0.9em; margin-bottom: 20px; }
+                
+                .log-entry { margin-bottom: 20px; border-left: 4px solid #ddd; padding-left: 15px; }
+                .planner { border-left-color: #9c27b0; background: #fcf0ff; padding: 10px; border-radius: 4px; }
+                .step-start h3 { background: #e8f0fe; padding: 10px; border-radius: 5px; color: #1967d2; margin-top: 30px; }
+                .vision-attempt { display: flex; gap: 20px; margin-top: 15px; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+                .vision-left { flex: 1; min-width: 300px; }
+                .vision-right { flex: 2; }
+                
+                .screenshot { width: 100%; border: 1px solid #ddd; border-radius: 5px; cursor: pointer; transition: transform 0.2s; }
+                .screenshot:hover { transform: scale(1.02); }
+                
+                .prompt-box { background: #f8f9fa; padding: 8px; font-size: 0.85em; color: #555; border-radius: 4px; max-height: 100px; overflow-y: auto; }
+                .response-box { background: #e6fffa; padding: 10px; border-radius: 4px; border: 1px solid #b2f5ea; white-space: pre-wrap; font-family: monospace; }
+                
+                .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.8em; color: white; font-weight: bold; }
+                .badge-retry { background: #f59e0b; }
+                .badge-critic { background: #6366f1; }
+                
+                .token-tag { background: #fffcf5; color: #b45309; padding: 2px 8px; border-radius: 6px; font-size: 0.8em; margin-left: 8px; border: 1px solid #fcd34d; font-weight: 500; }
+                
+                .success { color: #059669; font-weight: bold; padding: 10px; background: #d1fae5; border-radius: 5px; }
+                .error { color: #dc2626; font-weight: bold; padding: 10px; background: #fee2e2; border-radius: 5px; }
+                pre { margin: 0; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>🤖 AI Agent Execution Report</h1>
+                <div class="meta">
+                    <p><strong>Task:</strong> 在 Swag Labs 购买一个 背包</p>
+                    <p>
+                        <strong>Date:</strong> 2026-02-25 17:58:09 | 
+                        <strong>Duration:</strong> 209s |
+                        <strong style="color:#d97706; margin-left:15px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg> Total Tokens: 50118
+                        </strong>
+                    </p>
+                </div>
+                
+                <div class="logs">
+        
+                <div class="log-entry planner">
+                    <h4>🧠 Mission Planning <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>0</span></h4>
+                    <details>
+                        <summary>View Plan Details</summary>
+                        <pre>{
+  "target_url": "https://www.saucedemo.com/",
+  "steps": [
+    "在用户名输入框输入 <username>，在密码输入框输入 <password>，然后点击登录按钮",
+    "在商品列表页找到名为“Backpack”或“背包”的商品卡片",
+    "点击该卡片上的“Add to Cart”按钮，并确认按钮变为红色“Remove”以验证添加成功",
+    "点击页面右上角的购物车图标进入购物车页",
+    "在购物车页点击“Checkout”或“结账”按钮",
+    "在结账信息页依次填写 First Name 输入框为 <first_name>，Last Name 输入框为 <last_name>，Zip/Postal Code 输入框为 <zip>，然后点击“Continue”",
+    "在订单概览页确认商品为背包后点击“Finish”完成购买"
+  ]
+}</pre>
+                    </details>
+                </div>
+                
+                <div class="log-entry step-start">
+                    <h3>📍 Step 1/7: 在用户名输入框输入 <username>，在密码输入框输入 <password>，然后点击登录按钮</h3>
+                </div>
+                
+                <div class="vision-attempt">
+                    <div class="vision-left">
+                        <span class="badge badge-retry">Attempt #1</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>0</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:55:21</div>
+                        <a href="./screenshots/s1_exec_memory_1772013321581.jpg" target="_blank">
+                            <img src="./screenshots/s1_exec_memory_1772013321581.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div><strong>Executor Thought:</strong></div>
+                        <div class="response-box">记忆驱动</div>
+                        
+                        <div style="margin-top:10px;"><strong>🛠️ Parsed Actions:</strong></div>
+                        <pre style="background:#333; color:#fff; padding:10px; border-radius:4px;">[
+  {
+    "action": "type",
+    "coordinate": {
+      "x": 0.52,
+      "y": 0.244
+    },
+    "text": "<username>",
+    "description": "在用户名输入框输入 <username>"
+  },
+  {
+    "action": "type",
+    "coordinate": {
+      "x": 0.52,
+      "y": 0.326
+    },
+    "text": "<password>",
+    "description": "在密码输入框输入 <password>"
+  },
+  {
+    "action": "click",
+    "coordinate": {
+      "x": 0.52,
+      "y": 0.458
+    },
+    "description": "点击登录按钮"
+  }
+]</pre>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt" style="border-left: 4px solid #059669; background: #f0fdf4;">
+                    <div class="vision-left">
+                        <span class="badge badge-critic">⚖️ Critic Review</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2317</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:55:28</div>
+                        <a href="./screenshots/s1_check_action_mer_1772013323794.jpg" target="_blank">
+                            <img src="./screenshots/s1_check_action_mer_1772013323794.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div class="success">
+                            ✅ PASSED: The login process completed successfully, and the page has navigated to the product listing page as expected after entering credentials and clicking the login button.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="log-entry step-start">
+                    <h3>📍 Step 2/7: 在商品列表页找到名为“Backpack”或“背包”的商品卡片</h3>
+                </div>
+                
+                <div class="vision-attempt">
+                    <div class="vision-left">
+                        <span class="badge badge-retry">Attempt #1</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2653</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:55:42</div>
+                        <a href="./screenshots/s2_exec_1_1772013338402.jpg" target="_blank">
+                            <img src="./screenshots/s2_exec_1_1772013338402.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div><strong>Executor Thought:</strong></div>
+                        <div class="response-box">{"status": "completed", "reason": "在商品列表页找到名为\"Sauce Labs Backpack\"的商品卡片，符合目标要求"}</div>
+                        
+                        <div style="margin-top:10px;"><strong>🛠️ Parsed Actions:</strong></div>
+                        <pre style="background:#333; color:#fff; padding:10px; border-radius:4px;">{
+  "status": "completed",
+  "reason": "在商品列表页找到名为\"Sauce Labs Backpack\"的商品卡片，符合目标要求"
+}</pre>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt" style="border-left: 4px solid #059669; background: #f0fdf4;">
+                    <div class="vision-left">
+                        <span class="badge badge-critic">⚖️ Critic Review</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2294</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:55:45</div>
+                        <a href="./screenshots/s2_check_final_1_1772013342925.jpg" target="_blank">
+                            <img src="./screenshots/s2_check_final_1_1772013342925.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div class="success">
+                            ✅ PASSED: Successfully found the 'Sauce Labs Backpack' (or 'Backpack') product card in the products list page.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="log-entry step-start">
+                    <h3>📍 Step 3/7: 点击该卡片上的“Add to Cart”按钮，并确认按钮变为红色“Remove”以验证添加成功</h3>
+                </div>
+                
+                <div class="vision-attempt">
+                    <div class="vision-left">
+                        <span class="badge badge-retry">Attempt #1</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2708</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:55:57</div>
+                        <a href="./screenshots/s3_exec_1_1772013355456.jpg" target="_blank">
+                            <img src="./screenshots/s3_exec_1_1772013355456.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div><strong>Executor Thought:</strong></div>
+                        <div class="response-box">```json
+[
+  {
+    "action": "click",
+    "coordinate": { "x": 0.377, "y": 0.495 },
+    "description": "点击 Sauce Labs Backpack 卡片上的 Add to cart 按钮"
+  }
+]
+```</div>
+                        
+                        <div style="margin-top:10px;"><strong>🛠️ Parsed Actions:</strong></div>
+                        <pre style="background:#333; color:#fff; padding:10px; border-radius:4px;">[
+  {
+    "action": "click",
+    "coordinate": {
+      "x": 0.377,
+      "y": 0.495
+    },
+    "description": "点击 Sauce Labs Backpack 卡片上的 Add to cart 按钮"
+  }
+]</pre>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt" style="border-left: 4px solid #059669; background: #f0fdf4;">
+                    <div class="vision-left">
+                        <span class="badge badge-critic">⚖️ Critic Review</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2376</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:56:02</div>
+                        <a href="./screenshots/s3_check_action_1_1772013358507.jpg" target="_blank">
+                            <img src="./screenshots/s3_check_action_1_1772013358507.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div class="success">
+                            ✅ PASSED: The 'Add to Cart' button was clicked and the button state successfully changed to 'Remove' on the first product card, indicating the action completed successfully.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="log-entry step-start">
+                    <h3>📍 Step 4/7: 点击页面右上角的购物车图标进入购物车页</h3>
+                </div>
+                
+                <div class="vision-attempt">
+                    <div class="vision-left">
+                        <span class="badge badge-retry">Attempt #1</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2656</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:56:24</div>
+                        <a href="./screenshots/s4_exec_1_1772013382037.jpg" target="_blank">
+                            <img src="./screenshots/s4_exec_1_1772013382037.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div><strong>Executor Thought:</strong></div>
+                        <div class="response-box">```json
+[
+  {
+    "action": "click",
+    "coordinate": { "x": 0.967, "y": 0.041 },
+    "description": "点击页面右上角的购物车图标"
+  }
+]
+```</div>
+                        
+                        <div style="margin-top:10px;"><strong>🛠️ Parsed Actions:</strong></div>
+                        <pre style="background:#333; color:#fff; padding:10px; border-radius:4px;">[
+  {
+    "action": "click",
+    "coordinate": {
+      "x": 0.967,
+      "y": 0.041
+    },
+    "description": "点击页面右上角的购物车图标"
+  }
+]</pre>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt" style="border-left: 4px solid #059669; background: #f0fdf4;">
+                    <div class="vision-left">
+                        <span class="badge badge-critic">⚖️ Critic Review</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2360</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:56:28</div>
+                        <a href="./screenshots/s4_check_action_1_1772013384909.jpg" target="_blank">
+                            <img src="./screenshots/s4_check_action_1_1772013384909.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div class="success">
+                            ✅ PASSED: The action of clicking the shopping cart icon successfully navigated to the cart page, which is now displayed with cart content including the 'Your Cart' header and product details.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="log-entry step-start">
+                    <h3>📍 Step 5/7: 在购物车页点击“Checkout”或“结账”按钮</h3>
+                </div>
+                
+                <div class="vision-attempt">
+                    <div class="vision-left">
+                        <span class="badge badge-retry">Attempt #1</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2674</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:56:40</div>
+                        <a href="./screenshots/s5_exec_1_1772013398006.jpg" target="_blank">
+                            <img src="./screenshots/s5_exec_1_1772013398006.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div><strong>Executor Thought:</strong></div>
+                        <div class="response-box">```json
+[
+  {
+    "action": "click",
+    "coordinate": { "x": 0.901, "y": 0.594 },
+    "description": "点击Checkout按钮"
+  }
+]
+```</div>
+                        
+                        <div style="margin-top:10px;"><strong>🛠️ Parsed Actions:</strong></div>
+                        <pre style="background:#333; color:#fff; padding:10px; border-radius:4px;">[
+  {
+    "action": "click",
+    "coordinate": {
+      "x": 0.901,
+      "y": 0.594
+    },
+    "description": "点击Checkout按钮"
+  }
+]</pre>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt" style="border-left: 4px solid #059669; background: #f0fdf4;">
+                    <div class="vision-left">
+                        <span class="badge badge-critic">⚖️ Critic Review</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2379</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:56:44</div>
+                        <a href="./screenshots/s5_check_action_1_1772013400671.jpg" target="_blank">
+                            <img src="./screenshots/s5_check_action_1_1772013400671.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div class="success">
+                            ✅ PASSED: The click on 'Checkout' button successfully navigated to the checkout information page, showing 'Checkout: Your Information' interface with form fields visible.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="log-entry step-start">
+                    <h3>📍 Step 6/7: 在结账信息页依次填写 First Name 输入框为 <first_name>，Last Name 输入框为 <last_name>，Zip/Postal Code 输入框为 <zip>，然后点击“Continue”</h3>
+                </div>
+                
+                <div class="vision-attempt">
+                    <div class="vision-left">
+                        <span class="badge badge-retry">Attempt #1</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2770</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:56:55</div>
+                        <a href="./screenshots/s6_exec_1_1772013413193.jpg" target="_blank">
+                            <img src="./screenshots/s6_exec_1_1772013413193.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div><strong>Executor Thought:</strong></div>
+                        <div class="response-box">```json
+[
+  {
+    "action": "type",
+    "coordinate": { "x": 0.52, "y": 0.376 },
+    "text": "<first_name>",
+    "description": "在 First Name 输入框中输入 <first_name>"
+  }
+]
+```</div>
+                        
+                        <div style="margin-top:10px;"><strong>🛠️ Parsed Actions:</strong></div>
+                        <pre style="background:#333; color:#fff; padding:10px; border-radius:4px;">[
+  {
+    "action": "type",
+    "coordinate": {
+      "x": 0.52,
+      "y": 0.376
+    },
+    "text": "<first_name>",
+    "description": "在 First Name 输入框中输入 <first_name>"
+  }
+]</pre>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt" style="border-left: 4px solid #dc2626; background: #fef2f2;">
+                    <div class="vision-left">
+                        <span class="badge badge-critic">⚖️ Critic Review</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2702</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:57:03</div>
+                        <a href="./screenshots/s6_check_action_1_1772013416563.jpg" target="_blank">
+                            <img src="./screenshots/s6_check_action_1_1772013416563.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div class="error">
+                            ❌ FAILED: Clicked the 'Continue' button but the page did not navigate to the next step, indicating the click action did not trigger the expected page transition.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt">
+                    <div class="vision-left">
+                        <span class="badge badge-retry">Attempt #2</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2762</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:57:08</div>
+                        <a href="./screenshots/s6_exec_2_1772013423653.jpg" target="_blank">
+                            <img src="./screenshots/s6_exec_2_1772013423653.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div><strong>Executor Thought:</strong></div>
+                        <div class="response-box">```json
+[
+  {
+    "action": "type",
+    "coordinate": { "x": 0.5, "y": 0.46 },
+    "text": "<last_name>",
+    "description": "在Last Name输入框中输入<last_name>"
+  }
+]
+```</div>
+                        
+                        <div style="margin-top:10px;"><strong>🛠️ Parsed Actions:</strong></div>
+                        <pre style="background:#333; color:#fff; padding:10px; border-radius:4px;">[
+  {
+    "action": "type",
+    "coordinate": {
+      "x": 0.5,
+      "y": 0.46
+    },
+    "text": "<last_name>",
+    "description": "在Last Name输入框中输入<last_name>"
+  }
+]</pre>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt" style="border-left: 4px solid #dc2626; background: #fef2f2;">
+                    <div class="vision-left">
+                        <span class="badge badge-critic">⚖️ Critic Review</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>3457</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:57:28</div>
+                        <a href="./screenshots/s6_check_action_2_1772013429120.jpg" target="_blank">
+                            <img src="./screenshots/s6_check_action_2_1772013429120.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div class="error">
+                            ❌ FAILED: Clicked the Continue button but the page did not navigate to the next step, indicating the click action did not trigger the expected page transition.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt">
+                    <div class="vision-left">
+                        <span class="badge badge-retry">Attempt #3</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2985</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:57:33</div>
+                        <a href="./screenshots/s6_exec_3_1772013448311.jpg" target="_blank">
+                            <img src="./screenshots/s6_exec_3_1772013448311.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div><strong>Executor Thought:</strong></div>
+                        <div class="response-box">```json
+[
+  {
+    "action": "type",
+    "coordinate": { "x": 0.5, "y": 0.54 },
+    "text": "<zip>",
+    "description": "在Zip/Postal Code输入框中输入<zip>"
+  }
+]
+```</div>
+                        
+                        <div style="margin-top:10px;"><strong>🛠️ Parsed Actions:</strong></div>
+                        <pre style="background:#333; color:#fff; padding:10px; border-radius:4px;">[
+  {
+    "action": "type",
+    "coordinate": {
+      "x": 0.5,
+      "y": 0.54
+    },
+    "text": "<zip>",
+    "description": "在Zip/Postal Code输入框中输入<zip>"
+  }
+]</pre>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt" style="border-left: 4px solid #059669; background: #f0fdf4;">
+                    <div class="vision-left">
+                        <span class="badge badge-critic">⚖️ Critic Review</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2637</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:57:39</div>
+                        <a href="./screenshots/s6_check_action_3_1772013454365.jpg" target="_blank">
+                            <img src="./screenshots/s6_check_action_3_1772013454365.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div class="success">
+                            ✅ PASSED: All expected actions executed successfully and the page state updated to show filled checkout information form with Continue button visible.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="log-entry step-start">
+                    <h3>📍 Step 7/7: 在订单概览页确认商品为背包后点击“Finish”完成购买</h3>
+                </div>
+                
+                <div class="vision-attempt">
+                    <div class="vision-left">
+                        <span class="badge badge-retry">Attempt #1</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2764</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:57:54</div>
+                        <a href="./screenshots/s7_exec_1_1772013471654.jpg" target="_blank">
+                            <img src="./screenshots/s7_exec_1_1772013471654.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div><strong>Executor Thought:</strong></div>
+                        <div class="response-box">```json
+[
+  {
+    "action": "click",
+    "coordinate": { "x": 0.895, "y": 0.862 },
+    "description": "点击Continue按钮继续到下一步"
+  }
+]
+```</div>
+                        
+                        <div style="margin-top:10px;"><strong>🛠️ Parsed Actions:</strong></div>
+                        <pre style="background:#333; color:#fff; padding:10px; border-radius:4px;">[
+  {
+    "action": "click",
+    "coordinate": {
+      "x": 0.895,
+      "y": 0.862
+    },
+    "description": "点击Continue按钮继续到下一步"
+  }
+]</pre>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt" style="border-left: 4px solid #dc2626; background: #fef2f2;">
+                    <div class="vision-left">
+                        <span class="badge badge-critic">⚖️ Critic Review</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2501</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:58:00</div>
+                        <a href="./screenshots/s7_check_action_1_1772013475171.jpg" target="_blank">
+                            <img src="./screenshots/s7_check_action_1_1772013475171.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div class="error">
+                            ❌ FAILED: Clicked the 'Finish' button but the page did not show any change or state transition after the click operation.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt">
+                    <div class="vision-left">
+                        <span class="badge badge-retry">Attempt #2</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2709</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:58:03</div>
+                        <a href="./screenshots/s7_exec_2_1772013480859.jpg" target="_blank">
+                            <img src="./screenshots/s7_exec_2_1772013480859.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div><strong>Executor Thought:</strong></div>
+                        <div class="response-box">[
+  {
+    "action": "click",
+    "coordinate": { "x": 0.87, "y": 0.963 },
+    "description": "点击Finish按钮完成购买"
+  }
+]</div>
+                        
+                        <div style="margin-top:10px;"><strong>🛠️ Parsed Actions:</strong></div>
+                        <pre style="background:#333; color:#fff; padding:10px; border-radius:4px;">[
+  {
+    "action": "click",
+    "coordinate": {
+      "x": 0.87,
+      "y": 0.963
+    },
+    "description": "点击Finish按钮完成购买"
+  }
+]</pre>
+                    </div>
+                </div>
+                
+                <div class="vision-attempt" style="border-left: 4px solid #059669; background: #f0fdf4;">
+                    <div class="vision-left">
+                        <span class="badge badge-critic">⚖️ Critic Review</span>
+                        <span class="token-tag" title="Token Usage"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px; margin-bottom: 2px;"><path d="M10.101 4C8.181 4 6.375 4.3 5 4.818M13.899 20c1.92 0 3.726-.3 5.101-.818M4 19.182C4 20.187 7.582 21 12 21c4.418 0 8-.813 8-1.818V14.5c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 10.818C4 11.823 7.582 12.636 12 12.636c4.418 0 8-.813 8-1.818V8.136c0 1.005-3.582 1.818-8 1.818-2.607 0-4.927-.284-6.429-.737M4 8.136V4.818C4 3.813 7.582 3 12 3c4.418 0 8 .813 8 1.818v3.318"/></svg>2414</span>
+                        <div style="margin-top:5px; font-size:0.8em; color:#888;">17:58:08</div>
+                        <a href="./screenshots/s7_check_action_2_1772013483784.jpg" target="_blank">
+                            <img src="./screenshots/s7_check_action_2_1772013483784.jpg" class="screenshot" alt="screenshot">
+                        </a>
+                    </div>
+                    <div class="vision-right">
+                        <div class="success">
+                            ✅ PASSED: The page has successfully navigated to the checkout complete page after clicking 'Finish' to complete the purchase, showing 'Checkout: Complete!' and order confirmation messages.
+                        </div>
+                    </div>
+                </div>
+                <div class="log-entry success">🎉 Mission Complete</div>
+                </div>
+            </div>
+        </body>
+        </html>
+        

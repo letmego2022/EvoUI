@@ -1,0 +1,49 @@
+[
+    {
+      "id": "swag_labs",
+      "name": "Swag Labs",
+      "description": "电商购物演示系统，包含登录和结账流程",
+      "note": "当一个产品在首页被添加到购物车的时候 原来add to card会消失，变成红色的remove，此时说明已经添加成功",
+      "url": "https://www.saucedemo.com/",
+      "auth_type": "standard_login",
+      "credentials": {
+        "username": "standard_user",
+        "password": "secret_sauce" 
+      },
+      "business_data": {
+        "first_name": "Liu",
+        "last_name": "dekai",
+        "zip": "1001"
+      }
+    },
+    {
+      "id": "test_hub",
+      "name": "Test-Hub",
+      "description": "内部测试用例管理平台",
+      "url": "http://43.128.86.6/",
+      "auth_type": "standard_login",
+      "credentials": {
+        "username": "autotester",
+        "password": "123456"
+      }
+    },
+    {
+      "id": "orange_hrm",
+      "name": "OrangeHRM",
+      "description": "HR 人力资源管理系统",
+      "url": "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login",
+      "auth_type": "custom_function",
+      "login_func": "get_orange_token"
+    },
+    {
+        "id": "GTAMS",
+        "name": "GTAMS",
+        "description": "软件管理平台，使用动态Token链接登录",
+        "url": "DYNAMIC_GENERATED", 
+        "auth_type": "dynamic_url",
+        "url_generator": "get_gtams_url",
+        "business_data": {
+           "filter": "last_7_days"
+        }
+      }
+  ]

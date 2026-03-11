@@ -1,0 +1,68 @@
+{
+  "workspace": "Test-Hub",
+  "target_url": "http://www.flowtest.icu/",
+  "updated_at": "2026-02-28 15:30:44",
+  "operations": {
+    "op_ba855623": {
+      "description": "在项目名称输入框中输入test2",
+      "actions": [
+        {
+          "action": "type",
+          "coordinate": {
+            "x": 0.547,
+            "y": 0.357
+          },
+          "text": "test2",
+          "description": "在项目名称输入框中输入test2"
+        }
+      ],
+      "assertion": "The input action for project name 'test2' was successfully executed, and the text is visible in the Project Name field as expected.",
+      "stats": {
+        "success": 0,
+        "fail": 0
+      },
+      "created_at": "2026-02-24 10:17:16",
+      "last_used": "2026-02-25 13:29:23"
+    },
+    "op_66c473f7": {
+      "description": "点击 Create Project 按钮",
+      "actions": [
+        {
+          "action": "click",
+          "coordinate": {
+            "x": 0.645,
+            "y": 0.554
+          },
+          "description": "点击 Create Project 按钮"
+        }
+      ],
+      "assertion": "The click action to open the 'Add New Project' interface was successful, and the new project creation form is now displayed on screen.",
+      "stats": {
+        "success": 0,
+        "fail": 0
+      },
+      "created_at": "2026-02-25 13:28:50",
+      "last_used": "2026-02-25 13:28:50"
+    },
+    "op_de55ec45": {
+      "description": "点击登录按钮",
+      "actions": [
+        {
+          "action": "click",
+          "coordinate": {
+            "x": 0.677,
+            "y": 0.825
+          },
+          "description": "点击登录按钮"
+        }
+      ],
+      "assertion": "The login button was found and clicked successfully, leading to the login page display with username, password fields, and login button visible.",
+      "stats": {
+        "success": 0,
+        "fail": 0
+      },
+      "created_at": "2026-02-28 15:30:16",
+      "last_used": "2026-02-28 15:30:16"
+    }
+  }
+}
