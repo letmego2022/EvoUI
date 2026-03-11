@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Automation Report</title>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-icons.css') }}">
+    <style>
+        /* 全局样式 */
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* 顶部导航栏 */
+        .navbar-custom { background-color: #343a40; color: white; padding: 10px 20px; }
+        .navbar-custom .report-title { font-weight: bold; font-size: 1.2rem; }
+        .navbar-custom .timestamp { font-size: 0.9rem; background-color: #007bff; padding: 3px 10px; border-radius: 4px; }
+
+        /* 顶部仪表盘区域 */
+        .dashboard-panel { background: white; border-bottom: 1px solid #ddd; padding: 20px; margin-bottom: 20px; }
+        .chart-container { position: relative; height: 120px; width: 100%; display: flex; justify-content: center; }
+        .stat-label { font-size: 0.85rem; color: #666; margin-bottom: 5px; }
+        
+        /* 左侧边栏 */
+        .sidebar { background: white; height: calc(100vh - 250px); overflow-y: auto; border-right: 1px solid #ddd; }
+        .feature-item { padding: 15px; border-bottom: 1px solid #eee; cursor: pointer; transition: background 0.2s; }
+        .feature-item:hover, .feature-item.active { background-color: #f1f3f5; }
+        .feature-item .status-text { font-size: 0.8rem; float: right; font-weight: bold; }
+        .text-pass { color: #28a745; }
+        .text-fail { color: #dc3545; }
+        .feature-name { font-weight: 600; display: block; margin-bottom: 5px; }
+        .feature-time { font-size: 0.75rem; color: #888; }
+
+        /* 右侧详情区 */
+        .main-content { padding: 20px; height: calc(100vh - 250px); overflow-y: auto; background: white; }
+        .scenario-card { margin-bottom: 30px; border-left: 4px solid #ddd; padding-left: 15px; }
+        .scenario-card.pass { border-left-color: #28a745; }
+        .scenario-card.fail { border-left-color: #dc3545; }
+        
+        .tags .badge { background-color: #6c757d; font-weight: normal; margin-right: 5px; }
+        
+        /* 表格样式 */
+        .param-table { font-size: 0.85rem; margin-top: 10px; }
+        .param-table th { background-color: #f8f9fa; }
+
+        /* 步骤样式 */
+        .step-item { margin-top: 10px; }
+        .step-icon { width: 20px; text-align: center; margin-right: 8px; }
+        .step-keyword { font-weight: bold; color: #007bff; margin-right: 5px; }
+        .log-box { 
+            background-color: #f8f9fa; 
+            border: 1px solid #eee; 
+            padding: 10px; 
+            font-family: monospace; 
+            font-size: 0.85rem; 
+            color: #555; 
+            margin-top: 5px;
+            margin-left: 28px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. 顶部 Header -->
+    <div class="navbar-custom d-flex justify-content-between align-items-center">
+        <div class="report-title">Test Automation Report</div>
+        <div class="timestamp">{{ data.meta.generated_at }}</div>
+    </div>
+
+    <!-- 2. 仪表盘 (统计图) -->
+    <div class="dashboard-panel">
+        <div class="row text-center">
+            <!-- Features Chart -->
+            <div class="col-md-4 border-end">
+                <div class="stat-label text-start fw-bold">Features</div>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div style="width: 100px; height: 100px;">
+                        <canvas id="chartFeatures"></canvas>
+                    </div>
+                    <div class="text-start ms-3" style="font-size: 0.8rem;">
+                        <div class="text-pass">{{ data.stats.features.pass }} passed</div>
+                        <div class="text-fail">{{ data.stats.features.fail }} failed</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Scenarios Chart -->
+            <div class="col-md-4 border-end">
+                <div class="stat-label text-start fw-bold">Scenarios</div>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div style="width: 100px; height: 100px;">
+                        <canvas id="chartScenarios"></canvas>
+                    </div>
+                    <div class="text-start ms-3" style="font-size: 0.8rem;">
+                        <div class="text-pass">{{ data.stats.scenarios.pass }} passed</div>
+                        <div class="text-fail">{{ data.stats.scenarios.fail }} failed</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Steps Chart -->
+            <div class="col-md-4">
+                <div class="stat-label text-start fw-bold">Steps</div>
+                <div class="d-flex align-items-center justify-content-center">
+                    <div style="width: 100px; height: 100px;">
+                        <canvas id="chartSteps"></canvas>
+                    </div>
+                    <div class="text-start ms-3" style="font-size: 0.8rem;">
+                        <div class="text-pass">{{ data.stats.steps.pass }} passed</div>
+                        <div class="text-fail">{{ data.stats.steps.fail }} failed</div>
+                        <div class="text-muted">{{ data.stats.steps.skip }} skipped</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 主体内容 (Sidebar + Details) -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 左侧边栏 -->
+            <div class="col-md-3 p-0 sidebar">
+                {% for feature in data.features %}
+                <div class="feature-item {% if loop.first %}active{% endif %}" onclick="showFeature('{{ feature.id }}', this)">
+                    <span class="status-text {{ 'text-pass' if feature.status == 'pass' else 'text-fail' }}">
+                        {{ feature.status|capitalize }}
+                    </span>
+                    <span class="feature-name">{{ feature.name }}</span>
+                    <span class="feature-time">{{ feature.timestamp }}</span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- 右侧详情 -->
+            <div class="col-md-9 main-content">
+                {% for feature in data.features %}
+                <div id="{{ feature.id }}" class="feature-detail" style="display: {% if loop.first %}block{% else %}none{% endif %};">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h3>{{ feature.name }}</h3>
+                        <div>
+                            <span class="badge bg-secondary">Duration: {{ feature.duration }}</span>
+                            {% for tag in feature.tags %}
+                                <span class="badge bg-info text-dark">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% for scenario in feature.scenarios %}
+                    <div class="scenario-card {{ scenario.status }}">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fa-solid {{ 'fa-check-circle text-pass' if scenario.status == 'pass' else 'fa-times-circle text-fail' }} fa-lg me-2"></i>
+                            <h5 class="m-0">{{ scenario.name }}</h5>
+                        </div>
+
+                        <!-- 参数表 (Scenario Outline) -->
+                        {% if scenario.is_outline %}
+                        <div class="table-responsive mb-3 ps-4">
+                            <table class="table table-bordered table-sm param-table">
+                                <thead>
+                                    <tr>
+                                        {% for head in scenario.params_table.headers %}
+                                            <th>{{ head }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in scenario.params_table.rows %}
+                                        <tr>
+                                            {% for cell in row %}
+                                                <td>{{ cell }}</td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+
+                        <!-- 步骤列表 -->
+                        <div class="steps-list ps-1">
+                            {% for step in scenario.steps %}
+                            <div class="step-item">
+                                <div class="d-flex align-items-center">
+                                    <span class="step-icon">
+                                        <i class="fa-solid {{ 'fa-check text-pass' if step.status == 'pass' else 'fa-times text-fail' }}"></i>
+                                    </span>
+                                    <div>
+                                        <span class="step-keyword">{{ step.keyword }}</span>
+                                        <span>{{ step.name }}</span>
+                                    </div>
+                                </div>
+                                <!-- 日志 -->
+                                {% if step.logs %}
+                                <div class="log-box">
+                                    {% for log in step.logs %}
+                                        <div>{{ log }}</div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                        <div class="alert alert-light">No scenarios data for this feature.</div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js Library -->
+    <script src="{{ url_for('static', filename='js/chart.js') }}"></script>
+    
+    <script>
+        // --- 1. 图表初始化逻辑 ---
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '65%', // 甜甜圈图的厚度
+            plugins: { legend: { display: false } }
+        };
+
+        const colors = { pass: '#28a745', fail: '#dc3545', skip: '#007bff' };
+
+        // Features Chart
+        new Chart(document.getElementById('chartFeatures'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Pass', 'Fail'],
+                datasets: [{
+                    data: [{{ data.stats.features.pass }}, {{ data.stats.features.fail }}],
+                    backgroundColor: [colors.pass, colors.fail],
+                    borderWidth: 0
+                }]
+            },
+            options: commonChartOptions
+        });
+
+        // Scenarios Chart
+        new Chart(document.getElementById('chartScenarios'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Pass', 'Fail'],
+                datasets: [{
+                    data: [{{ data.stats.scenarios.pass }}, {{ data.stats.scenarios.fail }}],
+                    backgroundColor: [colors.pass, colors.fail],
+                    borderWidth: 0
+                }]
+            },
+            options: commonChartOptions
+        });
+
+        // Steps Chart
+        new Chart(document.getElementById('chartSteps'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Pass', 'Fail', 'Skip'],
+                datasets: [{
+                    data: [{{ data.stats.steps.pass }}, {{ data.stats.steps.fail }}, {{ data.stats.steps.skip }}],
+                    backgroundColor: [colors.pass, colors.fail, colors.skip],
+                    borderWidth: 0
+                }]
+            },
+            options: commonChartOptions
+        });
+
+        // --- 2. 交互逻辑 (点击侧边栏切换内容) ---
+        function showFeature(featureId, element) {
+            // 隐藏所有详情
+            document.querySelectorAll('.feature-detail').forEach(el => el.style.display = 'none');
+            // 显示选中详情
+            document.getElementById(featureId).style.display = 'block';
+            
+            // 更新侧边栏激活状态
+            document.querySelectorAll('.feature-item').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+    </script>
+</body>
+</html>

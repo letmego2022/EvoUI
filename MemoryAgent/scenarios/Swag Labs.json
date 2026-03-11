@@ -1,0 +1,146 @@
+{
+  "workspace": "Swag Labs",
+  "target_url": "https://www.saucedemo.com/",
+  "updated_at": "2026-02-25 17:58:08",
+  "operations": {
+    "op_ddeb2e19": {
+      "description": "在用户名输入框输入 <username>，在密码输入框输入 <password>，然后点击登录按钮",
+      "actions": [
+        {
+          "action": "type",
+          "coordinate": {
+            "x": 0.52,
+            "y": 0.244
+          },
+          "text": "<username>",
+          "description": "在用户名输入框输入 <username>"
+        },
+        {
+          "action": "type",
+          "coordinate": {
+            "x": 0.52,
+            "y": 0.326
+          },
+          "text": "<password>",
+          "description": "在密码输入框输入 <password>"
+        },
+        {
+          "action": "click",
+          "coordinate": {
+            "x": 0.52,
+            "y": 0.458
+          },
+          "description": "点击登录按钮"
+        }
+      ],
+      "assertion": "All expected actions executed successfully and the page state updated to the products page after login.",
+      "stats": {
+        "success": 0,
+        "fail": 0
+      },
+      "created_at": "2026-02-25 17:35:37",
+      "last_used": "2026-02-25 17:35:37"
+    },
+    "op_0bc2fb91": {
+      "description": "点击 Sauce Labs Backpack 卡片上的 Add to cart 按钮",
+      "actions": [
+        {
+          "action": "click",
+          "coordinate": {
+            "x": 0.377,
+            "y": 0.495
+          },
+          "description": "点击 Sauce Labs Backpack 卡片上的 Add to cart 按钮"
+        }
+      ],
+      "assertion": "The 'Add to Cart' button was clicked and the button state successfully changed to 'Remove' on the first product card, indicating the action completed successfully.",
+      "stats": {
+        "success": 0,
+        "fail": 0
+      },
+      "created_at": "2026-02-25 17:56:02",
+      "last_used": "2026-02-25 17:56:02"
+    },
+    "op_dde19b83": {
+      "description": "点击页面右上角的购物车图标",
+      "actions": [
+        {
+          "action": "click",
+          "coordinate": {
+            "x": 0.967,
+            "y": 0.041
+          },
+          "description": "点击页面右上角的购物车图标"
+        }
+      ],
+      "assertion": "The action of clicking the shopping cart icon successfully navigated to the cart page, which is now displayed with cart content including the 'Your Cart' header and product details.",
+      "stats": {
+        "success": 0,
+        "fail": 0
+      },
+      "created_at": "2026-02-25 17:56:28",
+      "last_used": "2026-02-25 17:56:28"
+    },
+    "op_cb58c5be": {
+      "description": "点击Checkout按钮",
+      "actions": [
+        {
+          "action": "click",
+          "coordinate": {
+            "x": 0.901,
+            "y": 0.594
+          },
+          "description": "点击Checkout按钮"
+        }
+      ],
+      "assertion": "The click on 'Checkout' button successfully navigated to the checkout information page, showing 'Checkout: Your Information' interface with form fields visible.",
+      "stats": {
+        "success": 0,
+        "fail": 0
+      },
+      "created_at": "2026-02-25 17:56:44",
+      "last_used": "2026-02-25 17:56:44"
+    },
+    "op_f8b6a588": {
+      "description": "在Zip/Postal Code输入框中输入<zip>",
+      "actions": [
+        {
+          "action": "type",
+          "coordinate": {
+            "x": 0.5,
+            "y": 0.54
+          },
+          "text": "<zip>",
+          "description": "在Zip/Postal Code输入框中输入<zip>"
+        }
+      ],
+      "assertion": "All expected actions executed successfully and the page state updated to show filled checkout information form with Continue button visible.",
+      "stats": {
+        "success": 0,
+        "fail": 0
+      },
+      "created_at": "2026-02-25 17:57:39",
+      "last_used": "2026-02-25 17:57:39"
+    },
+    "op_f689e6c9": {
+      "description": "点击Finish按钮完成购买",
+      "actions": [
+        {
+          "action": "click",
+          "coordinate": {
+            "x": 0.87,
+            "y": 0.963
+          },
+          "description": "点击Finish按钮完成购买"
+        }
+      ],
+      "assertion": "The page has successfully navigated to the checkout complete page after clicking 'Finish' to complete the purchase, showing 'Checkout: Complete!' and order confirmation messages.",
+      "stats": {
+        "success": 0,
+        "fail": 0
+      },
+      "created_at": "2026-02-25 17:58:08",
+      "last_used": "2026-02-25 17:58:08"
+    }
+  }
+}
