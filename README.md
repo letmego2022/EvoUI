@@ -58,34 +58,34 @@ Traditional automation often breaks when UI structure changes, APIs evolve, or b
 
 ---
 
-## MemoryAgent 功能介绍
+## MemoryAgent Overview
 
-MemoryAgent 是 EvoUI 中负责“流程记忆 + 智能执行 + 自愈回放”的核心模块，围绕 **Planner / Executor / Critic / Report / Scenario Memory** 形成闭环。
+MemoryAgent is EvoUI's core module for **workflow memory, intelligent execution, and self-healing replay**, built around a closed loop of **Planner / Executor / Critic / Report / Scenario Memory**.
 
-### 1) 智能规划（Planner）
-- 先通过 Router 根据用户指令匹配目标系统，再结合系统上下文与入口 URL 生成结构化执行计划。
-- 输出可解析的 JSON 计划，为后续 UI 执行与步骤编排提供统一输入。
+### 1) Intelligent Planning (Planner)
+- Uses the Router to map user intent to the target system, then combines system context and entry URL to build a structured execution plan.
+- Produces a parseable JSON plan as the unified input for downstream UI actions and step orchestration.
 
-### 2) 视觉执行（Executor）
-- 每一步会结合全局目标与当前步骤描述进行视觉理解，生成可执行动作（点击、输入、选择等）。
-- 支持重试机制，并在执行前后结合页面截图与语义上下文动态修正动作。
+### 2) Vision-Guided Execution (Executor)
+- Interprets each step using both global objective and current instruction, then generates executable actions (click, input, select, etc.).
+- Supports retries and dynamically corrects actions before/after execution using screenshots and semantic context.
 
-### 3) 步骤验收（Critic）
-- 每个步骤执行后由 Critic 进行视觉验收，判断当前步骤是否达成。
-- 若验收失败，会返回失败原因与建议（如重试偏移点击、清空重填、终止流程），驱动闭环修正。
+### 3) Step Acceptance (Critic)
+- After each step, the Critic performs visual acceptance to determine whether the step objective has been achieved.
+- On failure, it returns reasons and suggestions (e.g., offset-click retry, clear-and-refill, terminate flow) to drive closed-loop correction.
 
-### 4) 场景记忆与复用（Scenario Memory）
-- 以场景 JSON 维护 target_url、steps、operations 等可复用资产。
-- 支持 operation 级别的增量沉淀（description/actions/assertion），并记录 success/fail/last_used 等统计信息。
-- 在执行时可根据“全局目标 + 当前步骤 + 可用操作摘要”判断复用策略：`reuse` / `reuse_modified` / `new` / `unsure`。
+### 4) Scenario Memory and Reuse
+- Stores reusable assets in scenario JSON files, including `target_url`, `steps`, and `operations`.
+- Supports operation-level incremental accumulation (`description/actions/assertion`) with governance metadata such as `success`, `fail`, and `last_used`.
+- During execution, selects reuse strategies based on global goal, current step, and operation summaries: `reuse` / `reuse_modified` / `new` / `unsure`.
 
-### 5) 回放与自愈（Replay + Self-Healing）
-- 可按历史 steps 回放动作；当动作异常或验收失败时自动进入自愈流程。
-- 自愈流程会重新截图、生成新动作、再次验收；成功后会把修复后的 actions/assertion 回写到场景文件，持续提升后续回放成功率。
+### 5) Replay and Self-Healing
+- Replays actions from historical steps; when actions fail or acceptance fails, self-healing is triggered automatically.
+- Self-healing re-captures screenshots, generates new actions, and re-validates; once successful, repaired `actions/assertion` are written back to scenario files to improve future replay stability.
 
-### 6) 可追踪报告（ReportManager）
-- 执行过程会记录 Planner 输出、每次视觉尝试、Critic 验收结果与 Token 消耗。
-- 自动生成 HTML 报告与截图索引，支持复盘、审计和问题定位。
+### 6) Traceable Reporting (ReportManager)
+- Captures Planner output, each visual attempt, Critic acceptance results, and token consumption during execution.
+- Automatically generates HTML reports and screenshot indexes for review, audit, and issue diagnosis.
 
 ---
 
@@ -142,16 +142,16 @@ to help testing teams deliver faster, more stable, and more maintainable automat
 
 ---
 
-## Product Walkthrough (Bilingual + Left/Right Timeline)
+## Product Walkthrough (Left/Right Timeline)
 
 > Updated to a timeline-style layout with **left image / stage node / right image**, so the flow reads like a step-by-step journey.
 
 | Left View | Timeline Node | Right View |
 |---|---|---|
-| <img width="360" alt="EvoUI login page" src="https://github.com/user-attachments/assets/92ac4f5c-99d4-4018-b9fc-75ffc7f4d5ab" /> | **Phase 01: Access the Platform**<br/>中文：登录并进入统一仪表盘，建立测试上下文。<br/>EN: Sign in and enter the unified dashboard to establish project context. | <img width="360" alt="EvoUI dashboard" src="https://github.com/user-attachments/assets/3bae5bb1-8232-4137-bb86-51d1da53826e" /> |
-| <img width="360" alt="EvoUI user story management" src="https://github.com/user-attachments/assets/510f0860-ca1e-47ac-824a-9ef250817522" /> | **Phase 02: Structure Requirements**<br/>中文：维护 Story 结构，沉淀为可执行测试资产。<br/>EN: Curate and structure stories into executable testing assets. | <img width="360" alt="EvoUI test case generation" src="https://github.com/user-attachments/assets/7f7d9c8f-715f-45aa-9901-97cb1447b204" /> |
-| <img width="360" alt="EvoUI API automation" src="https://github.com/user-attachments/assets/3fe2c388-cd0a-4d98-9b66-2b026486f0c5" /> | **Phase 03: Generate & Execute**<br/>中文：自动生成脚本，并进入 Agent 协同执行。<br/>EN: Generate scripts automatically and move into agent-assisted execution. | <img width="360" alt="EvoUI AI agent workspace" src="https://github.com/user-attachments/assets/45217d70-4e61-4b77-ac77-b98277f733fd" /> |
-| <img width="360" alt="EvoUI agent orchestration" src="https://github.com/user-attachments/assets/f9dc035e-d667-4a37-9dbb-bd2ea04c9e9e" /> | **Phase 04: Orchestrate & Optimize Loop**<br/>中文：流程编排、UI 执行、报告回流，形成记忆优化闭环。<br/>EN: Orchestrate workflows, run UI automation, and feed reports into memory optimization. | <img width="360" alt="EvoUI UI automation robot" src="https://github.com/user-attachments/assets/c91e6534-fa42-47ba-9cd8-ac250fd85c3e" /> |
+| <img width="360" alt="EvoUI login page" src="https://github.com/user-attachments/assets/92ac4f5c-99d4-4018-b9fc-75ffc7f4d5ab" /> | **Phase 01: Access the Platform**<br/>Sign in and enter the unified dashboard to establish project context. | <img width="360" alt="EvoUI dashboard" src="https://github.com/user-attachments/assets/3bae5bb1-8232-4137-bb86-51d1da53826e" /> |
+| <img width="360" alt="EvoUI user story management" src="https://github.com/user-attachments/assets/510f0860-ca1e-47ac-824a-9ef250817522" /> | **Phase 02: Structure Requirements**<br/>Curate and structure stories into executable testing assets. | <img width="360" alt="EvoUI test case generation" src="https://github.com/user-attachments/assets/7f7d9c8f-715f-45aa-9901-97cb1447b204" /> |
+| <img width="360" alt="EvoUI API automation" src="https://github.com/user-attachments/assets/3fe2c388-cd0a-4d98-9b66-2b026486f0c5" /> | **Phase 03: Generate & Execute**<br/>Generate scripts automatically and move into agent-assisted execution. | <img width="360" alt="EvoUI AI agent workspace" src="https://github.com/user-attachments/assets/45217d70-4e61-4b77-ac77-b98277f733fd" /> |
+| <img width="360" alt="EvoUI agent orchestration" src="https://github.com/user-attachments/assets/f9dc035e-d667-4a37-9dbb-bd2ea04c9e9e" /> | **Phase 04: Orchestrate & Optimize Loop**<br/>Orchestrate workflows, run UI automation, and feed reports into memory optimization. | <img width="360" alt="EvoUI UI automation robot" src="https://github.com/user-attachments/assets/c91e6534-fa42-47ba-9cd8-ac250fd85c3e" /> |
 
 ### End-to-End Timeline Summary
 
