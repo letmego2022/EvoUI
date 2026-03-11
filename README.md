@@ -52,6 +52,37 @@ Traditional automation often breaks when UI structure changes, APIs evolve, or b
 
 ---
 
+## MemoryAgent 功能介绍
+
+MemoryAgent 是 EvoUI 中负责“流程记忆 + 智能执行 + 自愈回放”的核心模块，围绕 **Planner / Executor / Critic / Report / Scenario Memory** 形成闭环。
+
+### 1) 智能规划（Planner）
+- 先通过 Router 根据用户指令匹配目标系统，再结合系统上下文与入口 URL 生成结构化执行计划。
+- 输出可解析的 JSON 计划，为后续 UI 执行与步骤编排提供统一输入。
+
+### 2) 视觉执行（Executor）
+- 每一步会结合全局目标与当前步骤描述进行视觉理解，生成可执行动作（点击、输入、选择等）。
+- 支持重试机制，并在执行前后结合页面截图与语义上下文动态修正动作。
+
+### 3) 步骤验收（Critic）
+- 每个步骤执行后由 Critic 进行视觉验收，判断当前步骤是否达成。
+- 若验收失败，会返回失败原因与建议（如重试偏移点击、清空重填、终止流程），驱动闭环修正。
+
+### 4) 场景记忆与复用（Scenario Memory）
+- 以场景 JSON 维护 target_url、steps、operations 等可复用资产。
+- 支持 operation 级别的增量沉淀（description/actions/assertion），并记录 success/fail/last_used 等统计信息。
+- 在执行时可根据“全局目标 + 当前步骤 + 可用操作摘要”判断复用策略：`reuse` / `reuse_modified` / `new` / `unsure`。
+
+### 5) 回放与自愈（Replay + Self-Healing）
+- 可按历史 steps 回放动作；当动作异常或验收失败时自动进入自愈流程。
+- 自愈流程会重新截图、生成新动作、再次验收；成功后会把修复后的 actions/assertion 回写到场景文件，持续提升后续回放成功率。
+
+### 6) 可追踪报告（ReportManager）
+- 执行过程会记录 Planner 输出、每次视觉尝试、Critic 验收结果与 Token 消耗。
+- 自动生成 HTML 报告与截图索引，支持复盘、审计和问题定位。
+
+---
+
 ## How EvoUI Works (High-Level)
 
 ```text
