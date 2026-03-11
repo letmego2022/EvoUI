@@ -3,6 +3,8 @@
 EvoUI is an AI-driven testing platform designed to **assist QA engineers** across the full testing lifecycle: test case authoring, API testing, and UI automation.
 
 Its core differentiator is a **process-first memory model**: EvoUI stores and retrieves knowledge from critical workflow checkpoints (key nodes), then uses agent-based orchestration to execute and verify end-to-end scenarios more reliably.
+仪表盘页面
+<img width="2492" height="1155" alt="image" src="https://github.com/user-attachments/assets/9a22b036-2684-4814-aeaf-25e5f3690b8d" />
 
 ---
 
