@@ -8,7 +8,9 @@ Its core differentiator is a **process-first memory model**: EvoUI stores and re
 
 The dashboard is the operational hub for daily QA collaboration. It centralizes project status, test assets, and execution entry points so teams can move from planning to validation with clear context and fewer handoffs.
 
-<img width="2492" height="1155" alt="EvoUI dashboard overview" src="https://github.com/user-attachments/assets/9a22b036-2684-4814-aeaf-25e5f3690b8d" />
+<img width="1645" height="1080" alt="image" src="https://github.com/user-attachments/assets/61c03ed7-3660-455d-b85d-ed9ba8cafb42" />
+<img width="1639" height="959" alt="image" src="https://github.com/user-attachments/assets/bcef5006-0538-460c-bb6d-b34191d41d74" />
+
 
 ---
 
